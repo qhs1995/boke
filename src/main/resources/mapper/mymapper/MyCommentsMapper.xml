@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongshen.boke.dao.mapper.mymapper.MyCommentsMapper">
+
+
+  <select id="findByarticleId"  resultType="com.hongshen.boke.response.comments.CommentsResponse">
+    select bt.nickname as nickname,bc.creat_time as creatTime,bc.leave_comments as leaveComments
+    from boke_tourist bt left join boke_comments bc on  bt.id=bc.tourist_id
+    where bc.article_id=#{articleId} order by bc.creat_time desc
+  </select>
+</mapper>

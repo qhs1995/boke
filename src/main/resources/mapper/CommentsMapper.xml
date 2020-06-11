@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongshen.boke.dao.mapper.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.hongshen.boke.dao.object.CommentsDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tourist_id" jdbcType="INTEGER" property="touristId" />
+    <result column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="leave_comments" jdbcType="VARCHAR" property="leaveComments" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, tourist_id, article_id, creat_time, leave_comments
+  </sql>
+  <select id="selectByExample" parameterType="com.hongshen.boke.dao.object.CommentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from boke_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from boke_comments
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from boke_comments
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hongshen.boke.dao.object.CommentsExample">
+    delete from boke_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hongshen.boke.dao.object.CommentsDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into boke_comments (tourist_id, article_id, creat_time, 
+      leave_comments)
+    values (#{touristId,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{leaveComments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hongshen.boke.dao.object.CommentsDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into boke_comments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="touristId != null">
+        tourist_id,
+      </if>
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+      <if test="leaveComments != null">
+        leave_comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="touristId != null">
+        #{touristId,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveComments != null">
+        #{leaveComments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hongshen.boke.dao.object.CommentsExample" resultType="java.lang.Long">
+    select count(*) from boke_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update boke_comments
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.touristId != null">
+        tourist_id = #{record.touristId,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleId != null">
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatTime != null">
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leaveComments != null">
+        leave_comments = #{record.leaveComments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update boke_comments
+    set id = #{record.id,jdbcType=INTEGER},
+      tourist_id = #{record.touristId,jdbcType=INTEGER},
+      article_id = #{record.articleId,jdbcType=INTEGER},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      leave_comments = #{record.leaveComments,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hongshen.boke.dao.object.CommentsDO">
+    update boke_comments
+    <set>
+      <if test="touristId != null">
+        tourist_id = #{touristId,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveComments != null">
+        leave_comments = #{leaveComments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hongshen.boke.dao.object.CommentsDO">
+    update boke_comments
+    set tourist_id = #{touristId,jdbcType=INTEGER},
+      article_id = #{articleId,jdbcType=INTEGER},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      leave_comments = #{leaveComments,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hongshen.boke.dao.object.CommentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from boke_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

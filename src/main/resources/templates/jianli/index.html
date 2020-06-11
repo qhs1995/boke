@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${userinfo.name+'个人简历'}"></title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+
+    <!-- Favicons
+        ================================================== -->
+    <link rel="shortcut icon" href="/jianli/img/favicon_jianli.ico" type="image/x-icon">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/jianli/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/jianli/fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Slider
+        ================================================== -->
+    <link href="/jianli/css/owl.carousel.css" rel="stylesheet" media="screen">
+    <link href="/jianli/css/owl.theme.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheet
+        ================================================== -->
+    <link rel="stylesheet" type="text/css" href="/jianli/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/jianli/css/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="/jianli/fonts/sns_fonts/iconfont.css">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<!-- Navigation -->
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-terminal"
+                                                                    th:text="${userinfo.job}"></i></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#services">基本资料</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#works">项目经验</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#about">专业技能</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#team">工作经历</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#testimonials">自我评价</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contact">联系方式</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1>简历<span class="brand-heading" th:text="${'-'+userinfo.job}"></span></h1>
+                    <p class="intro-text">喜欢技术，热爱挑战</p>
+                    <a id="dl" class="btn btn-circle page-scroll">
+                        <i class="fa fa-download animated"></i>
+                    </a>
+                    <p class="intro-text" style="font-size: 16px;margin-top: 15px;letter-spacing: 1px;">下载简历</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Services Section -->
+<div id="services" class="text-center">
+    <div class="container">
+        <div class="section-title center">
+            <h2>基本 <strong>资料</strong></h2>
+            <hr>
+        </div>
+        <div class="space"></div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 service"><i class="fa fa-laptop"></i>
+                <h4><strong>个人信息</strong></h4>
+                <p th:utext="${'姓名：'+userinfo.name+'&nbsp;'+'性别：'+userinfo.sex+'</br>'+'年龄: '+userinfo.age+'&nbsp;'+'籍贯：'+userinfo.address}"></p>
+            </div>
+            <div class="col-md-3 col-sm-6 service"><i class="fa fa-code"></i>
+                <h4><strong>专业学历</strong></h4>
+                <p th:utext="${'专业：'+userinfo.specialty+'</br>'+'学历：'+userinfo.education}"></p>
+            </div>
+            <div class="col-md-3 col-sm-6 service"><i class="fa fa-rocket"></i>
+                <h4><strong>毕业学校</strong></h4>
+                <p th:utext="${'毕业学校：'+userinfo.school}"></p>
+            </div>
+            <div class="col-md-3 col-sm-6 service"><i class="fa fa-bullseye"></i>
+                <h4><strong>联系方式</strong></h4>
+                <p th:utext="${'电话：'+userinfo.linkPhone+'</br>邮箱：'+userinfo.linkEmail}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Portfolio Section -->
+<div id="works">
+    <div class="container"> <!-- Container -->
+        <div class="section-title text-center center">
+            <h2>项目 <strong>经验</strong></h2>
+            <hr>
+            <div class="clearfix"></div>
+            <!--<p>主要涉及电商，金融，家装领域，包括PC端，手机端，微信端，移动APP端等等，主要技术是HTML+CSS+JS</p>-->
+        </div>
+        <div class="categories">
+            <ul class="cat">
+                <li>
+                    <ol class="type">
+                        <li><a href="#" data-filter="*" class="active">所有</a></li>
+                        <!--<li><a href="#" data-filter=".web">PC端</a></li>-->
+                        <!--<li><a href="#" data-filter=".app">移动端</a></li>-->
+                        <!--<li><a href="#" data-filter=".branding">响应式</a></li>-->
+                    </ol>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="portfolio-items">
+
+                <div class="col-sm-6 col-md-3 col-lg-3 web" th:each="project,projectStat:${ projectList}">
+                    <div class="portfolio-item">
+                        <div class="hover-bg">
+                            <div class="hover-text">
+                                <h4><a href='#' target='_blank' th:title="${project.projectName}"
+                                       th:text="${project.projectName}"></a></h4>
+                                <small th:utext="${project.projectSkill}"></small>
+                                <div class="clearfix"></div>
+                                <i class="fa fa-search"></i>
+                                <br>
+                            </div>
+                            <img th:src="${project.projectImg}" class="img-responsive"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About Section -->
+<div id="about">
+    <div class="container">
+        <div class="section-title text-center center">
+            <h2><strong>专业</strong> 技能</h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><img src="/jianli/img/about.png" class="img-responsive"></div>
+            <div class="col-md-6">
+                <div class="about-text">
+                    <i class="fa fa-users"></i>
+                    <div th:each="skill,skillStat:${ skillList}">
+                        <div class="padding-left"><i class="fa fa-check-square-o"></i>
+                            <p th:text="${ skill.skillDetails}"></p></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div id="achivements" class="section dark-bg">-->
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div class="col-md-3 col-sm-3">-->
+<!--<div class="achivement-box">-->
+<!--<i class="fa fa-smile-o"></i>-->
+<!--<span class="count">25</span>-->
+<!--<h4>Age Years</h4>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-3">-->
+<!--<div class="achivement-box">-->
+<!--<i class="fa fa-code"></i>-->
+<!--<span class="count">100000</span>-->
+<!--<h4>Code Amount</h4>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-3">-->
+<!--<div class="achivement-box">-->
+<!--<i class="fa fa-check-square-o"></i>-->
+<!--<span class="count">4800</span>-->
+<!--<h4>Work Hour</h4>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-3">-->
+<!--<div class="achivement-box">-->
+<!--<i class="fa fa-trophy"></i>-->
+<!--<span class="count">20</span>-->
+<!--<h4>Projects Amount</h4>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!-- Team Section -->
+<div id="team" class="text-center">
+    <div class="container">
+        <div class="section-title center">
+            <h2>工作 <strong>经历</strong></h2>
+            <hr>
+        </div>
+        <div id="row">
+
+            <div class="col-md-3 col-sm-6" th:each="work,workStat:${ workList}">
+                <div class="thumbnail">
+                    <img th:src="${ work.companyImg}" class="img-circle team-img">
+                    <div class="caption">
+                        <h3 th:text="${ work.companyName}"></h3>
+                        <p th:text="${ work.job}"></p>
+                        <p th:text="${#dates.format(work.startTime, 'yyyy-MM-dd')+'至'+#dates.format(work.endTime, 'yyyy-MM-dd')}"></p>
+                        <p th:text="${ work.workContent}"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Testimonials Section -->
+<div id="testimonials" class="text-center">
+    <div class="container">
+        <div class="section-title center">
+            <h2>自我 <strong>评价</strong></h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div id="testimonial" class="owl-carousel owl-theme">
+                    <div class="item" th:each="appraisal,appraisalStat:${ appraisalList}">
+                        <p th:text="${ appraisal.content}"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div id="contact" class="text-center">
+    <div class="container">
+        <div class="section-title center">
+            <h2><strong>联系</strong> 方式</h2>
+            <hr>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-4"><i class="fa fa-map-marker fa-2x"></i>
+                <p th:text="${userinfo.linkAddress}"></p>
+            </div>
+            <div class="col-md-4"><i class="fa fa-envelope-o fa-2x"></i>
+                <p th:text="${userinfo.linkEmail}"></p>
+            </div>
+            <div class="col-md-4"><i class="fa fa-phone fa-2x"></i>
+                <p th:text="${userinfo.linkPhone}"></p>
+            </div>
+            <hr>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <hr>
+            <h3>给我发邮件</h3>
+            <form name="sentMessage" id="contactForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" id="name" class="form-control" placeholder="姓名" required="required">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<input type="email" id="email" class="form-control" placeholder="邮箱" required="required">-->
+                    <!--<p class="help-block text-danger"></p>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <div class="form-group">
+                    <textarea name="message" id="message" class="form-control" rows="4" placeholder="内容"
+                              required></textarea>
+                    <p class="help-block text-danger"></p>
+                </div>
+                <div id="success"></div>
+                <button id="submit" type="submit" class="btn btn-default">确认发送</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<nav id="footer">
+    <div class="container">
+        <div class="pull-left fnav">
+            <p th:utext="${'Copyright &copy; 2018 作者：'+userinfo.name+'  <a style='+'color:#F4D03F'+' href='+'/boke.html'+' target='+'_blank'+' title='+'前端博客'+'>个人博客</a>'}">
+            </p>
+        </div>
+        <div class="pull-right fnav">
+            <ul class="footer-social">
+                <li>
+                    <a th:href="${'http://v.t.sina.com.cn/share/share.php?url=http://qian.hongshen.site&title='+userinfo.name+'简历'}">
+                        <i class="icon iconfont">&#xe66e;</i></a></li>
+                <li>
+                    <a th:href="${'http://connect.qq.com/widget/shareqq/index.html?url=http://qian.hongshen.site/&title='+userinfo.name+'简历'}">
+                        <i class="icon iconfont">&#xe629;</i></a></li>
+                <li>
+                    <a th:href="${'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://qian.hongshen.site/&title='+userinfo.name+'简历'}">
+                        <i class="icon iconfont">&#xe616;</i></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="/jianli/js/jquery.1.11.1.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="/jianli/js/bootstrap.js"></script>
+<script type="text/javascript" src="/jianli/js/SmoothScroll.js"></script>
+<script type="text/javascript" src="/jianli/js/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="/jianli/js/jquery.isotope.js"></script>
+<script type="text/javascript" src="/jianli/js/jquery.counterup.js"></script>
+<script type="text/javascript" src="/jianli/js/waypoints.js"></script>
+<script type="text/javascript" src="/jianli/js/jqBootstrapValidation.js"></script>
+<script type="text/javascript" src="/jianli/js/contact_me.js"></script>
+<script src="/jianli/js/owl.carousel.js"></script>
+
+<!-- Javascripts
+    ================================================== -->
+<script type="text/javascript" src="/jianli/js/main.js"></script>
+
+<script>
+    $(function () {
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1 || u.indexOf('iPhone') > -1 || u.indexOf('Windows Phone') > -1 || navigator.userAgent.indexOf("iPad") > -1) {
+            $(".hover-bg .hover-text").css({'opacity': '1'});
+
+            $(".hover-bg .hover-text>h4").css({
+                'opacity': '1',
+                '-webkit-transform': 'translateY(0)',
+                'transform': 'translateY(0)'
+            });
+
+            $(".hover-bg .hover-text>i").css({'opacity': '1'});
+        }
+
+    });
+
+</script>
+</body>
+</html>

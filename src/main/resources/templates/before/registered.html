@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>游客-注册</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="/css/demo.css" />
+  <link rel="stylesheet" href="/css/templatemo-style.css">
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <script type="text/javascript" src="/js/modernizr.custom.86080.js"></script>
+  <script type="text/javascript" src="/layui/layui.js"></script>
+	</head>
+
+	<body>
+
+			<div id="particles-js"></div>
+		
+			<ul class="cb-slideshow">
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	        </ul>
+
+			<div class="container-fluid">
+				<div class="row cb-slideshow-text-container ">
+					<div class= "tm-content col-xl-6 col-sm-8 col-xs-8 ml-auto section">
+					<header class="mb-5"><h1>Letter</h1></header>
+					<P class="mb-5">已有账号去<a style="color: green" href="/toutist/login.html">登录</a></P>
+					
+                    <form class="layui-form">
+               	    	<div class="row form-section">
+							<div class="col-md-7 col-sm-7 col-xs-7">
+			                      <input lay-verify="username" id="username" name="username" type="text" class="form-control" placeholder="请输入您的登录账号" required/>
+				  			</div>
+						</div>
+						<div class="row form-section">
+
+						<div class="col-md-7 col-sm-7 col-xs-7">
+							<input  lay-verify="nickname" id="nickname" name="nickname" type="text" class="form-control"  placeholder="请输入您的昵称" required/>
+						</div>
+					  </div>
+						<div class="row form-section">
+							<div class="col-md-7 col-sm-7 col-xs-7">
+								<input  lay-verify="password" id="password" name="password" type="password" class="form-control"  placeholder="请输入您的密码" required/>
+							</div>
+						</div>
+						<div class="row form-section">
+
+							<div class="col-md-7 col-sm-7 col-xs-7">
+								<input  lay-verify="passw" id="passw" name="passw" type="password" class="form-control"  placeholder="请再次确认您的密码" required/>
+							</div>
+							<div class="col-md-5 col-sm-5 col-xs-5">
+								<button lay-filter="add" lay-submit=""  class="tm-btn-subscribe">注册</button>
+							</div>
+						</div>
+                    </form>
+
+
+					</div>
+				</div>	
+				<div class="footer-link">
+						<p href="#">联系邮箱:17623568875@163.com</p>
+						<a href="http://www.miitbeian.gov.cn/" target="view_window"> 渝ICP备18015422号</a>
+				</div>
+			</div>	
+	</body>
+
+	<script type="text/javascript" src="/js/particles.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+<script>
+    layui.use(['form','layer','layedit'], function(){
+        var $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer;
+        //自定义验证规则
+        form.verify({
+            username: function(value){
+                if (value.length === 0 || value.length>12) {
+                    return '账号名不能为空且不能超过12个字符';
+                }
+            },
+            nickname: function(value){
+                if (value.length === 0 || value.length>12) {
+                    return '昵称不能为空且不能超过12个字符';
+                }
+            },
+            password: function(value){
+                if($('#passw').val()!=$('#password').val()){
+                    return '两次密码不一致';
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(add)', function(data){
+            $.ajax({
+                type: "POST",  //提交方式
+                url: "/manager/toutist/edit.html",
+                dataType: 'json',
+                async: false,
+                contentType: 'application/json',
+                data: JSON.stringify(data.field),
+                success: function (result) {//返回数据根据结果进行相应的处理
+                    layer.confirm(result.msg, {
+                        btn: ['确认'] //按钮
+                    }, function(){
+                       // window.history.go(-1);
+                        window.location.href = "/toutist/login.html";
+                    });
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+</html>

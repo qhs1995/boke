@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="x-body">
+        <form class="layui-form">
+            <input type="hidden"  th:value="${ user.id}" id="id"  name="id"  autocomplete="off" class="layui-input">
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>登录账号
+              </label>
+              <div class="layui-input-inline">
+                  <input th:value="${ user.username}" type="text" id="username" name="username" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+            <div class="layui-form-item ">
+                <label for="name" class="layui-form-label">
+                    用户昵称
+                </label>
+                <div class="layui-input-inline">
+                    <input th:value="${ user.name}" type="text" id="name" name="name" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+          <div class="layui-form-item">
+              <label for="headPortrait" class="layui-form-label">
+                  头像
+              </label>
+              <!--<div class="layui-input-inline">-->
+                  <!--<input th:value="${ user.headPortrait}" type="text" id="headPortrait" name="headPortrait" required="" lay-verify="required"-->
+                         <!--autocomplete="off" class="layui-input">-->
+              <!--</div>-->
+              <input type="hidden"  id="headPortrait" name="headPortrait" th:value="${ user.headPortrait}"  />
+              <input id="fileheadPortrait" type="file" name="fileheadPortrait"/>
+              <input type="button"  value="上传" onclick="myFunction(0)" />
+              <div id="headPortraitImg" th:if="${ user.headPortrait != ''&& user.headPortrait != null}">
+                  <img id="tx" th:src="${ user.headPortrait}" width="50" height="50">
+              </div>
+          </div>
+            <div class="layui-form-item">
+                <label for="wechat" class="layui-form-label">
+                    <span class="x-red">*</span>微信
+                </label>
+                <!--<div class="layui-input-inline">-->
+                    <!--<input th:value="${ user.wechat}" type="text" id="wechat" name="wechat" required="" lay-verify="required"-->
+                           <!--autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <input type="hidden"  id="wechat" name="wechat" th:value="${ user.wechat}"  />
+                <input id="filewechat" type="file" name="filewechat"/>
+                <input type="button"  value="上传" onclick="myFunction(1)" />
+                <div id="wechatImg" th:if="${ user.wechat != ''&& user.wechat != null}">
+                    <img id="wx" th:src="${ user.wechat}" width="50" height="50">
+                </div>
+            </div>
+            <div class="layui-form-item ">
+                <label for="qqNumber" class="layui-form-label">
+                    QQ
+                </label>
+                <!--<div class="layui-input-inline">-->
+                    <!--<input th:value="${ user.qqNumber}" type="text" id="qqNumber" name="qqNumber" required="" lay-verify="required"-->
+                           <!--autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <input type="hidden" id="qqNumber" name="qqNumber" th:value="${ user.qqNumber}"   />
+                <input id="fileqq" type="file" name="fileqq"/>
+                <input type="button"  value="上传" onclick="myFunction(2)" />
+                <div id="qqImg" th:if="${ user.qqNumber != ''&& user.qqNumber != null}">
+                    <img id="qq" th:src="${ user.qqNumber}" width="50" height="50">
+                </div>
+            </div>
+            <div class="layui-form-item ">
+                <label for="weibo" class="layui-form-label">
+                    微博
+                </label>
+                <!--<div class="layui-input-inline">-->
+                    <!--<input th:value="${ user.weibo}" type="text" id="weibo" name="weibo" required="" lay-verify="required"-->
+                           <!--autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <input type="hidden" id="weibo" name="weibo"  th:value="${ user.weibo}" />
+                <input id="fileweibo" type="file" name="fileweibo"/>
+                <input type="button"  value="上传" onclick="myFunction(3)" />
+                <div id="weiboImg" th:if="${ user.weibo != ''&& user.weibo != null}">
+                    <img id="wb" th:src="${ user.weibo}" width="50" height="50">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="signature" class="layui-form-label">
+                   签名
+                </label>
+                <div class="layui-input-block">
+                    <input th:value="${ user.signature}" type="text" id="signature" name="signature" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item ">
+                <label for="password" class="layui-form-label">
+                    <span class="x-red">*</span> 密码
+                </label>
+                <div class="layui-input-inline">
+                    <input th:value="${ user.password}" type="password" id="password" name="password" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item ">
+                <label for="passw" class="layui-form-label">
+                    <span class="x-red">*</span> 确认密码
+                </label>
+                <div class="layui-input-inline">
+                    <input th:value="${ user.password}" type="password" id="passw" name="passw" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+          <div class="layui-form-item">
+              <label  class="layui-form-label">
+              </label>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">
+                  确认修改
+              </button>
+          </div>
+
+      </form>
+    </div>
+    <script>
+        layui.use(['form','layer'], function(){
+           var $ = layui.jquery;
+          var form = layui.form
+          ,layer = layui.layer;
+
+          //自定义验证规则
+          form.verify({
+            nikename: function(value){
+              if(value.length < 5){
+                return '昵称至少得5个字符啊';
+              }
+            }
+            ,repass: function(value){
+                if($('#password').val()!=$('#passwd').val()){
+                    return '两次密码不一致';
+                }
+            }
+          });
+
+            //监听提交
+            form.on('submit(add)', function(data){
+                $.ajax({
+                    type: "POST",  //提交方式
+                    url: "/manager/user/edit.html",
+                    dataType: 'json',
+                    async: false,
+                    contentType: 'application/json',
+                    data: JSON.stringify(data.field),
+                    success: function (result) {//返回数据根据结果进行相应的处理
+                        if (result.code === 0) {
+                            //发异步，把数据提交给php
+                            layer.alert("修改成功", {icon: 6},function () {
+                                // 获得frame索引
+                                var index = parent.layer.getFrameIndex(window.name);
+                                //关闭当前frame
+                                parent.layer.close(index);
+                                //刷新父页面
+                                window.parent.location.reload();
+                            });
+                        } else {
+                            layer.alert(result.msg);
+                        }
+                    }
+                });
+                return false;
+            });
+
+
+        });
+        // 1 微信  2 QQ  3 微博
+        function myFunction(data){
+            var formData = new FormData();
+            if (data==1){
+                formData.append('file', $('#filewechat')[0].files[0]);
+            } else if (data==2){
+                formData.append('file', $('#fileqq')[0].files[0]);
+            } else if (data==3){
+                formData.append('file', $('#fileweibo')[0].files[0]);
+            }else if (data==0){
+                formData.append('file', $('#fileheadPortrait')[0].files[0]);
+            }
+            $.ajax({
+                type: "POST",  //提交方式
+                url: "/headImgUpload.html",
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (result) {//返回数据根据结果进行相应的处理
+                    if (result.code === 0){
+                        alert(result.msg);
+                        if (data==1){
+                            document.getElementById("wechat").value = result.data;
+                            $("#wx").attr('src',result.data);
+                        }else if (data == 2) {
+                            document.getElementById("qqNumber").value = result.data;
+                            $("#qq").attr('src',result.data);
+                        }else if (data == 3) {
+                            document.getElementById("weibo").value = result.data;
+                            $("#wb").attr('src',result.data);
+                        }else if (data == 0) {
+                            document.getElementById("headPortrait").value = result.data;
+                            $("#tx").attr('src',result.data);
+                        }
+                    }else {
+                        alert(result.msg);
+                    }
+
+                }
+            });
+        }
+    </script>
+  </body>
+
+</html>

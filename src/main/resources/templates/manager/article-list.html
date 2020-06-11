@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">文章管理</a>
+        <a>
+          <cite>文章列表</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加文章','/manager/article/article-edit.html')"><i class="layui-icon"></i>添加文章</button>
+      </xblock>
+
+    </div>
+    <table    class="layui-table list-table1" id="test-table-checkbox" ></table>
+    <script type="text/html" id="inventory_option">
+      <a title="编辑"  onclick="x_admin_show('编辑','/manager/article/query.html?id={{d.id}}')" href="javascript:;">
+        <i class="layui-icon">&#xe642;</i>
+      </a>
+      <a title="删除" onclick="member_del(this,'{{d.id}}')" href="javascript:;">
+        <i class="layui-icon">&#xe640;</i>
+      </a>
+    </script>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <script  >
+      layui.use(['form', 'laydate', 'table','jquery'], function(){
+        var laydate = layui.laydate;
+          var table = layui.table;
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+
+          table.render({
+              elem: '#test-table-checkbox'
+              ,url:'/manager/article/queryList.html'
+              ,page: true
+              ,id: 'testReload'
+              ,cols: [
+                  [  {  title: '序号',type:'numbers'},{
+                      field: 'title',
+                      title: '文章标题'
+                  }, {
+                      field: 'columnName',
+                      title: '栏目名称',
+                      templet:function (data) {
+
+                          return data.parentName+"/"+data.columnName;
+                      }
+                  }, {
+                      field: 'description',
+                      title: '文章描述'
+
+                  },  {
+                      field: 'creatTime',
+                      title: '创建时间',
+                      templet:function (data) {
+                          Date.prototype.Format = function (fmt) { //author: meizz
+                              var o = {
+                                  "M+": this.getMonth() + 1, //月份
+                                  "d+": this.getDate(), //日
+                                  "h+": this.getHours(), //小时
+                                  "m+": this.getMinutes(), //分
+                                  "s+": this.getSeconds(), //秒
+                                  "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                                  "S": this.getMilliseconds() //毫秒
+                              };
+                              if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                              for (var k in o)
+                                  if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                              return fmt;
+                          };
+                        return new Date(data.creatTime).Format("yyyy-MM-dd hh:mm:ss");
+                      }
+
+                  }, {
+                      field: 'uName',
+                      title: '作者'
+
+                  }, {
+                      field: 'id',
+                      title: '操作',
+                      templet: '#inventory_option'
+                  }]
+              ]
+          });
+
+
+      });
+
+      function member_del(obj,id){
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $.ajax({
+                  type: "POST",  //提交方式
+                  url: "/manager/article/delete.html?id="+id,
+                  dataType: 'json',
+                  async: false,
+                  contentType: 'application/json',
+                  success: function (result) {//返回数据根据结果进行相应的处理
+                      if (result.code === 0) {
+                          //发异步，把数据提交给
+                          $(obj).parents("tr").remove();
+                          layer.msg('已删除!',{icon:1,time:1000});
+                      } else {
+                          layer.alert(result.msg);
+                      }
+                  }
+              });
+
+          });
+      }
+
+
+
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,60 @@
+#简历文件上传到jar包外下的static文件下
+spring:
+  resources:
+    static-locations: classpath:static/,file:static/
+  profiles:
+
+    #kafaka配置
+    kafka:
+      #ip地址和端口号
+      bootstrap-servers: 127.0.0.1:9092
+      consumer:
+        group-id: testq
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        batch-size: 65536
+        buffer-memory: 524288
+        bootstrap-servers: 127.0.0.1:9092
+
+
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: 123456
+      pool:
+
+    #activemq
+    activemq:
+      broker-url: tcp://127.0.0.1:61616
+      #true 表示使用内置的MQ，false则连接服务器
+      in-memory: false
+      # true表示使用连接池；false时，每发送一条数据创建一个连接
+      pool:
+        enabled: false
+        max-connections: 10
+        idle-timeout: 30000
+
+    #运行环境
+    active: my
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.hongshen.boke.dao
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+logging:
+  file: myLog.log
+  config: classpath:logback-spring-stest.xml
+  path:
+
+

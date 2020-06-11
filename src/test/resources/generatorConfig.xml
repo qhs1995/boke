@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<context id="context1" defaultModelType="flat" targetRuntime="MyBatis3">
+
+
+		<!-- ToString方法 -->
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+		<plugin type="plugin.ModelRenamePlugin">
+			<property name="modelNameSuffix" value="DO" />
+		</plugin>
+
+		<plugin type="plugin.ModelCommentPlugin" />
+
+		<plugin type="plugin.TableIgnoreFiledPlugin" >
+			<property name="gmt_create_time" value="true" />
+			<property name="gmt_update_time" value="true" />
+		</plugin>
+
+		<plugin type="plugin.SqlMapMergeablePlugin">
+			<property name="isMergeable" value="false"/>
+		</plugin>
+
+		<!-- 增加Serializable接口 -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+		<!-- 增加行界限接口 -->
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+
+		<!--关闭注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true"/>
+			<!--<property name="suppressDate" value="false"/>-->
+			<!--<property name="addRemarkComments" value="false"/>-->
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+						connectionURL="jdbc:mysql://47.99.218.155:3306/my_jianli?useUnicode=true"
+						userId="root"
+						password="qianhongshen">
+			<property name="schema" value="false" />
+		</jdbcConnection>
+
+    <!--jdbc BigDecimals类型 强转成java的BigDecimals类型-->
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="true" />
+    </javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.hongshen.boke.dao.jianli.object" targetProject="${user.dir}\src\main\java" />
+		<sqlMapGenerator targetPackage="jianli" targetProject="${user.dir}\src\main\resources\mapper" />
+		<javaClientGenerator targetPackage="com.hongshen.boke.dao.jianli.mapper" targetProject="${user.dir}\src\main\java" type="XMLMAPPER" />
+
+
+		<!--表配置-->
+        <!--<table tableName="store_member">
+            <generatedKey column="id" sqlStatement="MySql"  identity="true"/>
+            <domainObjectRenamingRule searchString="^Store" replaceString="" />
+        </table>-->
+
+		<table tableName="jianli_work">
+			<generatedKey column="id" sqlStatement="MySql"  identity="true"/>
+			<domainObjectRenamingRule searchString="Jianli" replaceString="" />
+		</table>
+    </context>
+</generatorConfiguration>

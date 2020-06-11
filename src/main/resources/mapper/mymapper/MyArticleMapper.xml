@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongshen.boke.dao.mapper.mymapper.MyArticleMapper">
+
+  <select id="list" resultType="com.hongshen.boke.response.article.ArticleListResponse">
+    select ba.id, ba.title,ba.creat_time as creatTime,bc.name as columnName ,bu.name as uName,ba.description as description,bc.parent_name as parentName
+    from
+     boke_article ba left join boke_user bu on ba.user_id=bu.id
+     left join boke_column bc on ba.column_id=bc.id
+     where 1=1
+     order by ba.creat_time
+  </select>
+
+    <select id="queryById" resultType="com.hongshen.boke.response.article.ArticleQueryResponse">
+    select ba.id ,ba.creat_time as creatTime ,ba.title,ba.content ,ba.description ,ba.column_id as columnId,bc.parent_id as parentId
+    from
+     boke_article ba left join boke_column bc on ba.column_id=bc.id
+  WHERE ba.id =#{id}
+  </select>
+
+    <select id="queryArticleForParentColumn" resultType="com.hongshen.boke.dao.object.ArticleDO">
+    SELECT * from boke_article  WHERE column_id IN (SELECT id FROM boke_column WHERE parent_id=#{id} );
+  </select>
+
+    <select id="queryByTitle" resultType="com.hongshen.boke.dao.object.ArticleDO">
+    SELECT * from boke_article as ba WHERE ba.title like CONCAT('%',#{articleTitle},'%');
+  </select>
+</mapper>

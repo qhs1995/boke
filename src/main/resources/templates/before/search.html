@@ -1,0 +1,94 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head  th:replace="before/title::titls"></head>
+	<body class="home blog custom-background round-avatars">
+		<div th:replace="before/title::pagination" ></div>
+		<div id="main" class="content">
+			<div class="container">
+				<article itemscope="itemscope" th:if="!${#lists.isEmpty(articleList)}" >
+					<div class="posts-list js-posts" id="article">
+					</div>
+				</article>
+				<div th:if="${#lists.isEmpty(articleList)}">
+					<p align="center">暂无内容..</p>
+				</div>
+				<!-- -pagination  -->
+			</div>
+		</div>
+
+		<div th:replace="before/title::tail" ></div>
+	<script th:inline="javascript">
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
+
+
+		page=1;
+		var article=[[${articleList}]];
+        window.onload=loadArticle(article);
+		function loadArticle(data) {
+		    var html='';
+                for (var i=0;i<data.length;i++) {
+                   // window.alert(article[i].title);
+						html=html+"<div th:each=\"article,articleStat:${ articleList}\" class=\"post post-layout-list\" data-aos=\"fade-up\">\n" +
+                            "<div class=\"postnormal review \">" +
+                            "<div class=\"post-container review-item\">" +
+                            "<div class=\"row review-item-wrapper\">" +
+                            "<div class=\"col-sm-3\">" +
+                            "<a rel=\"nofollow\" >" +
+                            "<div class=\"review-item-img\" style=\"background-image: url(/statics/images/diego-ph-249471-2-800x1000.jpg);\"></div>" +
+                            "</a>" +
+                            "</div>" +
+                            "<div class=\"col-sm-9 flex-xs-middle\">" +
+                            "<div class=\"review-item-title\">" +
+                            "<a href=\"/article/detail.html?id="+data[i].id+"\" rel=\"bookmark\" >"+data[i].title+"</a>" +
+                            "</div>" +
+                            "<div class=\"review-item-creator\"><b>发布日期：</b><b >"+ new Date(data[i].creatTime).Format("yyyy-MM-dd")+"</b></div>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class=\"review-bg-wrapper\">" +
+                            "<div class=\"bg-blur\" style=\"background-image: url(/statics/images/diego-ph-249471-2-800x1000.jpg);\"></div>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class=\"post-container\">" +
+                            "<div class=\"entry-content\" >"+data[i].description+"</div>" +
+                            "<div class=\"post-footer\">" +
+                            "<a class=\"gaz-btn primary\" href=\"/article/detail.html?id="+data[i].id+"\">查看更多</a>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>";
+                }
+            if (data.length>=10){
+                    html=html+ "<p id='loadMore' class='loadMore' onclick='loadMore()' align='center'>点击加载更多</p>";
+			}
+                $('#article').append(html);
+
+        }
+
+        function loadMore() {
+		    page = page+1;
+            $.get('/article/list.html?page='+page,
+                function (res) {
+                    $("#loadMore").remove();
+                  	loadArticle(res.data);
+
+                }
+            )
+        }
+	</script>
+	</body>
+</html>
